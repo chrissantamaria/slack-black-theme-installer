@@ -21,7 +21,12 @@ with open('black_theme.txt') as f:
     black_theme = f.read()
 
 for file in ['index.js', 'ssb-interop.js']:
-    with open(path.join(static_dir, file), 'a') as f:
-        f.write('\n\n' + black_theme)
+    with open(path.join(static_dir, file), 'a+') as f:
+        f.seek(0)
+        if black_theme in f.read():
+            print('Black theme already present in ' + file + ', skipping')
+        else:
+            f.write('\n\n' + black_theme)
+            print('Wrote black theme to ' + file)
 
 print('Successfully added black theme to Slack app files')
