@@ -17,16 +17,23 @@ static_dir = path.join(
     slack_dir, app_dir, 'resources', 'app.asar.unpacked', 'src', 'static'
 )
 
-with open('black_theme.txt') as f:
-    black_theme = f.read()
+try:
+    with open('black_theme.txt') as f:
+        black_theme = f.read()
+except FileNotFoundError:
+    print('black_theme.txt not found, add to working directory for install to run')
+    quit()
 
 for file in ['index.js', 'ssb-interop.js']:
-    with open(path.join(static_dir, file), 'a+') as f:
-        f.seek(0)
-        if black_theme in f.read():
-            print('Black theme already present in ' + file + ', skipping')
-        else:
-            f.write('\n\n' + black_theme)
-            print('Wrote black theme to ' + file)
+    try:
+        with open(path.join(static_dir, file), 'r+') as f:
+            f.seek(0)
+            if black_theme in f.read():
+                print('Black theme already present in ' + file + ', skipping')
+            else:
+                f.write('\n\n' + black_theme)
+                print('Wrote black theme to ' + file)
+    except FileNotFoundError:
+        print(file + ' not found, skipping')
 
 print('Successfully added black theme to Slack app files')
