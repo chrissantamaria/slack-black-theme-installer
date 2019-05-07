@@ -7,3 +7,4 @@ Create a file `black-theme.txt` (see slack-black-theme or use the included examp
 
 ## Todo
 - Handle multiple app directories and use newest (potential old installs)
+- Custom Slack install directories (currently assumes `%homepath%\AppData\Local\slack`)
