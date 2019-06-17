@@ -8,10 +8,14 @@ slack_folders = [f.name for f in scandir(slack_dir) if f.is_dir()]
 
 r = re.compile('app-.+')
 try:
-    app_dir = next(x for x in slack_folders if r.match(x))
+    app_folders = list(filter(lambda x: r.match(x), slack_folders))
+    # App dir names are converted from strings (ex: "app-3.0.4") to numbers (ex: 304)
+    # and sorted to find the max version number which is the desired install directory
+    app_dir = sorted(app_folders, key=lambda x: int(re.sub(r'\D', '', x)))[-1]
 except StopIteration:
     print('Slack app directory not found in ' + slack_dir)
     quit()
+print('Using app directory ' + app_dir)
 
 static_dir = path.join(
     slack_dir, app_dir, 'resources', 'app.asar.unpacked', 'src', 'static'
