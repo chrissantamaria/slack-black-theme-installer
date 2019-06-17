@@ -17,7 +17,11 @@ document.addEventListener("DOMContentLoaded", function () {
       --text: #999;
       --background: #222;
       --background-elevated: #444;
-    }`
+    }
+	.p-message_pane__foreword__description {
+	  color: var(--text)
+	}
+  `
 
   // Insert a style tag into the wrapper view
   cssPromise.then(css => {
